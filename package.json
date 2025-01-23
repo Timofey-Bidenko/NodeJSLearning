@@ -2,14 +2,17 @@
     "name": "it-hillel",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "./Lesson/index.js",
+    "type": "module",
     "scripts": {
         "test": "echo \"Error ~> No Test Specified\" && exit 1",
-        "start": "node index.js"
+        "start": "node ./Lesson/index.js",
+        "custom": "node ./Lesson/custom.js"
     },
     "author": "",
     "license": "ISC",
-    "dependencies": {
+    "devDependencies": {
+        "chalk": "^5.4.1",
         "dotenv": "^16.4.7"
     }
 }
