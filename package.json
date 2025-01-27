@@ -6,13 +6,15 @@
     "type": "module",
     "scripts": {
         "test": "echo \"Error ~> No Test Specified\" && exit 1",
-        "start": "node ./Lesson/index.js",
-        "custom": "node ./Lesson/custom.js"
+        "start": "node --env-file .env --watch ./Lesson/index.js",
+        "check": "node --env-file .env ./Homework/index.js"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "axios": "^1.7.9",
         "chalk": "^5.4.1",
-        "dotenv": "^16.4.7"
+        "dotenv": "^16.4.7",
+        "openai": "^4.80.0"
     }
 }
