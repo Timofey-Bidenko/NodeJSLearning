@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "",
     "main": "./Lesson/index.js",
+    "type": "module",
     "scripts": {
         "test": "echo \"Error ~> No Test Specified\" && exit 1",
         "start": "node ./Lesson/index.js",
