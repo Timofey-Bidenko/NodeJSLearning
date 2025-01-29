@@ -2,6 +2,13 @@ import Logger from "./logger/logger.js"
 
 const logger = new Logger()
 
-logger.info("E")
-logger.warning("E")
-logger.error("E")
+logger.getAllMethods().forEach((methodName, i) => {
+    logger[methodName]("Hello World!")
+    try {
+        const a = 5
+        a = 3
+    } catch (err) {
+        logger[methodName](err)
+    }
+})
+

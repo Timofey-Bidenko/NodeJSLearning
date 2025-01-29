@@ -3,8 +3,6 @@ import path from "node:path"
 import levels from "./levels.js"
 import formatMessage from "./formatter.js"
 
-console.log(process.env.APP_ENV);
-
 
 class Logger {
     constructor(logPath = "logs/app.log") {
@@ -20,12 +18,15 @@ class Logger {
 
     __log(level, msg) {
         const formattedMsg = formatMessage(level, msg)
-
-        fs.appendFileSync(this.logPath, `${formattedMsg} \n`, function(err) {
-            if (err) {
-                console.log(`Error writing to file at ${this.logPath} with error ${err.message}`);
-            }
-        })
+        if (formattedMsg) {
+            console.log(formattedMsg);
+        
+            // fs.appendFileSync(this.logPath, `${formattedMsg} \n`, function(err) {
+            //     if (err) {
+            //         console.log(`Error writing to file at ${this.logPath} with error ${err.message}`);
+            //     }
+            // })
+        }
     }
 
     info(msg) {
@@ -36,6 +37,25 @@ class Logger {
     }
     error(msg) {
         this.__log(levels.ERROR, msg)
+    }
+    emergency(msg) {
+        this.__log(levels.EMERGENCY, msg)
+    }
+    alert(msg) {
+        this.__log(levels.ALERT, msg)
+    }
+    critical(msg) {
+        this.__log(levels.CRITICAL, msg)
+    }
+    notice(msg) {
+        this.__log(levels.NOTICE, msg)
+    }
+    debug(msg) {
+        this.__log(levels.DEBUG, msg)
+    }
+
+    getAllMethods() {
+        return Object.values(levels)
     }
 }
 
