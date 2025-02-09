@@ -1,24 +1,34 @@
-import EventEmitter from "./emitter.js"
+import { EventEmitter } from "node:events"
+
+let n = 0
+const numEmojis = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
+
+
 
 const emitter = new EventEmitter
-emitter.addEventListener("call", function() {
-    console.log("Async code!");
+emitter.on("call", function() {
+    setImmediate(() => console.log(`${numEmojis[n++]}   Async code!`))
 })
-emitter.addEventListener("call", function() {
-    console.log("Async Hellow World!");
+emitter.on("call", function() {
+    setImmediate(() => console.log("   Async Hellow World!"))
 })
-emitter.addEventListener("call", function() {
-    console.log("Async.");
+emitter.on("call", function() {
+    setImmediate(() => console.log("   Async End."))
 })
 
-emitter.addEventListener("spaceOutput", console.log)
+emitter.on("asyncCallback", setImmediate)
 
 let i = 0
 
 setInterval(() => {
-    console.log(`${++i}×Sync code`); // this happens first
-    emitter.fireEvent("call") // 4th
-    console.log("CTRL+C to stop!"); // this happens 2nd
-    emitter.fireEvent("spaceOutput", "") // 5th (last)
-    console.log(`Current count = ${i}`); // this happens 3rd
+    console.log(`${numEmojis[n++]}  ${++i} × Sync code`); // this happens first
+    emitter.emit("call") // 4th
+    console.log(`${numEmojis[n++]}  CTRL+C to stop!`); // this happens 2nd
+    emitter.emit("asyncCallback", () => {console.log(`${numEmojis[n++]}___-_-_-___-_-_-___`)}) // 5th
+    console.log(`${numEmojis[n++]}  Current count = ${i}`); // this happens 3rd
+    emitter.emit("asyncCallback", () => {
+        n = 0
+        console.log("n reset!")
+        console.log("")
+    }) // 6th (last)
 }, 1000);
