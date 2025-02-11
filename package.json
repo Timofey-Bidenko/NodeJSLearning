@@ -2,15 +2,19 @@
     "name": "it-hillel",
     "version": "1.0.0",
     "description": "",
-    "main": "./Lesson/index.js",
+    "main": "./EntryPoints/index.js",
+    "type": "module",
     "scripts": {
         "test": "echo \"Error ~> No Test Specified\" && exit 1",
-        "start": "node ./Lesson/index.js",
-        "check": "node ./Homework/index.js"
+        "start": "node --env-file .env ./EntryPoints/index.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "dotenv": "^16.4.7"
+        "dotenv": "^16.4.7",
+        "chalk": "^5.4.1"
+    },
+    "devDependencies": {
+        "chalk": "^5.4.1"
     }
 }
