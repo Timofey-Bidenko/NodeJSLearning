@@ -1,7 +1,7 @@
 import fs from "node:fs"
 import path from "node:path"
 import levels from "../customTypes/loggerLevelTypes.js"
-import formatMessage from "./formatter.js"
+import { logEmitter } from "./logStreamEmitter.js"
 
 
 class Logger {
@@ -17,16 +17,7 @@ class Logger {
     }
 
     __log(level, msg) {
-        const formattedMsg = formatMessage(level, msg)
-        if (formattedMsg) {
-            console.log(formattedMsg);
-        
-            // fs.appendFileSync(this.logPath, `${formattedMsg} \n`, function(err) {
-            //     if (err) {
-            //         console.log(`Error writing to file at ${this.logPath} with error ${err.message}`);
-            //     }
-            // })
-        }
+        logEmitter.emit("log", { level, message: msg });
     }
 
     info(msg) {
