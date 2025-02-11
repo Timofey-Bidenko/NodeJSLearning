@@ -1,12 +1,11 @@
 import fs from "node:fs"
 import path from "node:path"
 import levels from "../customTypes/loggerLevelTypes.js"
-import { logEmitter } from "./logStreamEmitter.js"
-
+import createLogEmitter from "./logStreamEmitter.js"
 
 class Logger {
-    constructor(logPath = "l0calstorage/app.log") {
-        this.logPath= logPath
+    constructor(logPath = "app.log") {
+        this.logPath = `l0calstorage/${logPath.length > 0 ? logPath : "app.log"}`
 
         if (!fs.existsSync(path.dirname(this.logPath))) {
             fs.mkdirSync(
@@ -14,10 +13,12 @@ class Logger {
                 {recursive: true}
             )
         }
+
+        this.logEmitter = createLogEmitter(this.logPath)
     }
 
     __log(level, msg) {
-        logEmitter.emit("log", { level, message: msg });
+        this.logEmitter.emit("log", { level, message: msg });
     }
 
     info(msg) {
