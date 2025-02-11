@@ -1,12 +1,11 @@
 import fs from "node:fs"
 import path from "node:path"
 import levels from "../customTypes/loggerLevelTypes.js"
-import formatMessage from "./formatter.js"
-
+import createLogEmitter from "./logStreamEmitter.js"
 
 class Logger {
-    constructor(logPath = "l0calstorage/app.log") {
-        this.logPath= logPath
+    constructor(logPath = "app.log") {
+        this.logPath = `l0calstorage/${logPath.length > 0 ? logPath : "app.log"}`
 
         if (!fs.existsSync(path.dirname(this.logPath))) {
             fs.mkdirSync(
@@ -14,19 +13,12 @@ class Logger {
                 {recursive: true}
             )
         }
+
+        this.logEmitter = createLogEmitter(this.logPath)
     }
 
     __log(level, msg) {
-        const formattedMsg = formatMessage(level, msg)
-        if (formattedMsg) {
-            console.log(formattedMsg);
-        
-            // fs.appendFileSync(this.logPath, `${formattedMsg} \n`, function(err) {
-            //     if (err) {
-            //         console.log(`Error writing to file at ${this.logPath} with error ${err.message}`);
-            //     }
-            // })
-        }
+        this.logEmitter.emit("log", { level, message: msg });
     }
 
     info(msg) {
