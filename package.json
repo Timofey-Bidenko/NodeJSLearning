@@ -11,8 +11,9 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "chalk": "^5.4.1",
         "dotenv": "^16.4.7",
-        "chalk": "^5.4.1"
+        "express": "^4.21.2"
     },
     "devDependencies": {
         "chalk": "^5.4.1"
