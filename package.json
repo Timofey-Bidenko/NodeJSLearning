@@ -12,10 +12,10 @@
     "license": "ISC",
     "dependencies": {
         "chalk": "^5.4.1",
-        "dotenv": "^16.4.7",
-        "express": "^4.21.2"
+        "dotenv": "^16.4.7"
     },
     "devDependencies": {
-        "chalk": "^5.4.1"
+        "chalk": "^5.4.1",
+        "express": "^4.21.2"
     }
 }
