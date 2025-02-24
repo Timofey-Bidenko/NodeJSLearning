@@ -1,18 +1,12 @@
-import express, { json } from "express";
-import getLink from "../CustomModules/getLink/index.js"
-import {viewRouter} from "../src/routes/view.js"
-const app = express();
-app.use(json());
-app.set("view engine", "pug");
-app.set("views", "./src/views/");
+import {Router} from "express"
+import getLink from "../../CustomModules/getLink/index.js"
 
-const AppPort = process.env.AppPort
+export const viewRouter = Router()
 const linkRoot = getLink()
 
-app.use("*", viewRouter)
+const DS = {};
 
-/* 
-app.post("/:mainKey", (req, res) => {
+viewRouter.post("/:mainKey", (req, res) => {
     let textRequired = true
     const mainKey = req.params.mainKey;
     
@@ -35,14 +29,14 @@ app.post("/:mainKey", (req, res) => {
     res.json(item);
 });
 
-app.get("/:mainKey", (req, res) => {
+viewRouter.get("/:mainKey", (req, res) => {
     const mainKey = req.params.mainKey;
     if (!DS[mainKey]) return res.sendStatus(404);
     
-    res.render("index", { linkRoot: linkRoot, tasks: DS[mainKey].items, currentUrl: `/${mainKey}` });
+    res.render("layout", { linkRoot: linkRoot, tasks: DS[mainKey].items, currentUrl: `/${mainKey}` });
 });
 
-app.get("/:mainKey/:itemId", (req, res) => {
+viewRouter.get("/:mainKey/:itemId", (req, res) => {
     const { mainKey, itemId } = req.params;
     if (!DS[mainKey]) return res.sendStatus(404);
     
@@ -52,7 +46,7 @@ app.get("/:mainKey/:itemId", (req, res) => {
     res.json(item);
 });
 
-app.put("/:mainKey/:itemId", (req, res) => {
+viewRouter.put("/:mainKey/:itemId", (req, res) => {
     const { mainKey, itemId } = req.params;
     if (!DS[mainKey]) return res.sendStatus(404);
     
@@ -63,7 +57,7 @@ app.put("/:mainKey/:itemId", (req, res) => {
     res.json(item);
 });
 
-app.delete("/:mainKey/:itemId", (req, res) => {
+viewRouter.delete("/:mainKey/:itemId", (req, res) => {
     const { mainKey, itemId } = req.params;
     if (!DS[mainKey]) return res.sendStatus(404);
     
@@ -74,9 +68,6 @@ app.delete("/:mainKey/:itemId", (req, res) => {
     res.sendStatus(200);
 });
 
-app.all("*", (req, res) => {
-    res.render("index", { linkRoot: linkRoot, mainKeys: Object.keys(DS), tasks: [], currentUrl: `/` });
+viewRouter.all("*", (req, res) => {
+    res.render("layout", { linkRoot: linkRoot, mainKeys: Object.keys(DS), tasks: [], currentUrl: `/`, title: "To-Do App" });
 }); 
-*/
-
-app.listen(AppPort, () => console.log(`Server running on port App_Port >>> ${linkRoot}`));

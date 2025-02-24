@@ -1,0 +1,35 @@
+extends layout
+
+block content
+    h1 test
+    h2 #{currentUrl}
+    main
+        if currentUrl !== "/" && currentUrl !== ""
+            h1 Task List
+            input#newTaskInput(type="text" placeholder="Describe the goal")
+            button(onclick=`if(newTaskInput.value) fetch('${currentUrl}', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: newTaskInput.value }) }).then(() => location.reload())`) Add New Task
+            ul
+                if tasks 
+                    each task in tasks
+                        li
+                            p
+                                if (task.status === "done")
+                                    | ✅ 
+                                    s
+                                        | #{task.text}
+                                else
+                                    | #{task.status} ▶️
+                                    b 
+                                        | #{task.text}
+                            button(style="margin-left: 20px" onclick=`fetch('${currentUrl}/${task.id}', { method: 'DELETE' }).then(() => location.reload())`) Delete
+                            input(type="checkbox" checked=task.status === "done" onchange=`fetch('${currentUrl}/${task.id}', { method: 'PUT' }).then(() => location.reload())`)
+        else
+            input#newListInput(type="text" placeholder="New/Destination   List Name" style="width: 220px;")
+            button(onclick=`
+            if (newListInput.value) { 
+                const url = "${linkRoot}" + newListInput.value 
+                console.log(url, "Logged")
+
+                fetch(url, { method: 'POST' })
+                .then(() => location.href=url)
+            }`) Create List

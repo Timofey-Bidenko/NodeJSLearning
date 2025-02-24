@@ -1,0 +1,9 @@
+header
+    if currentUrl === "/"
+        if mainKeys
+            ul
+                each mainKey in mainKeys
+                    li
+                        a(href=linkRoot + mainKey) #{mainKey}
+    else
+        a(href=linkRoot) Home
