@@ -12,7 +12,8 @@
     "license": "ISC",
     "dependencies": {
         "chalk": "^5.4.1",
-        "dotenv": "^16.4.7"
+        "dotenv": "^16.4.7",
+        "express-session": "^1.18.1"
     },
     "devDependencies": {
         "chalk": "^5.4.1",

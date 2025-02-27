@@ -33,7 +33,7 @@ viewRouter.get("/:mainKey", (req, res) => {
     const mainKey = req.params.mainKey;
     if (!DS[mainKey]) return res.sendStatus(404);
     
-    res.render("layout", { linkRoot: linkRoot, tasks: DS[mainKey].items, currentUrl: `/${mainKey}` });
+    res.render("index", { linkRoot: linkRoot, tasks: DS[mainKey].items, currentUrl: `/${mainKey}` });
 });
 
 viewRouter.get("/:mainKey/:itemId", (req, res) => {
@@ -69,5 +69,5 @@ viewRouter.delete("/:mainKey/:itemId", (req, res) => {
 });
 
 viewRouter.all("*", (req, res) => {
-    res.render("layout", { linkRoot: linkRoot, mainKeys: Object.keys(DS), tasks: [], currentUrl: `/`, title: "To-Do App" });
+    res.render("index", { linkRoot: linkRoot, mainKeys: Object.keys(DS), tasks: [], currentUrl: `/`, title: "To-Do App" });
 }); 
