@@ -1,5 +1,25 @@
+import Joi from "joi"
 import {Router} from "express"
 import getLink from "../../CustomModules/getLink/index.js"
+
+function taskValidator(req, res, next) {
+    const taskSchema = Joi.object({
+        text: Joi.string().min(1).max(40).required()
+    })
+
+    const {error} = taskSchema.validate(req.body, {
+        allowUnknown: false,
+        abortEarly: false
+    })
+
+    if (error) {
+        res.json({
+            errors: error.details.map(itm => itm.message)
+        })
+        return
+    }
+    return true
+}
 
 export const viewRouter = Router()
 const linkRoot = getLink()
@@ -9,18 +29,19 @@ const DS = {};
 viewRouter.post("/:mainKey", (req, res) => {
     let textRequired = true
     const mainKey = req.params.mainKey;
-    
+
     if (!DS[mainKey]) {
         DS[mainKey] = { localId: 0, items: [] }
         textRequired = false
     };
 
-    if (!textRequired) res.json(DS);
+    if (!textRequired) {
+        res.json(DS)
+        return
+    };
 
+    if (!taskValidator(req, res)) return;
 
-
-    if (!req.body || !req.body.text) return res.status(400).json({ error: `"text": "[Your text here]" in a json is required` });
-    
     const newId = DS[mainKey].localId + 1;
     const item = { id: newId, text: req.body.text, status: "new" };
     DS[mainKey].items.push(item);
