@@ -3,6 +3,14 @@ import { DS } from "../middleware/dataStore.js";
 
 const linkRoot = getLink();
 
+function updateLastActive(mainKey) {
+    try {
+        DS[mainKey]["lastActive"] = Date.now()
+    } catch {
+
+    }
+}
+
 export function createTask(req, res) {
     const { textValid } = req
 

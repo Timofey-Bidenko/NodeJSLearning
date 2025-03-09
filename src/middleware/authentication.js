@@ -5,22 +5,28 @@ const REFRESH_TOKEN_SECRET = "Buy{flour!HelloWorld!milk°_°eggs^_^sugar:/butter
 
 function getRefreshedToken(req, res) {
     const {refreshToken} = req.cookies
+    let result = false
+
     jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (err, user) => {
-        if (err) return;
+        if (err) return res.sendStatus(404);
 
         const newAccessToken = generateAccessToken({ mainKey: user.mainKey })
         res.cookie("accessToken", newAccessToken, { httpOnly: true, secure: true, maxAge: 15 * 60 * 1000 })
 
-        return newAccessToken
+        result = newAccessToken
     })
+
+    return result
 }
 
 export function authenticateTokens(req, res, next) {
     const { UserIsNew } = req
-    if (UserIsNew) next();
+    if (UserIsNew) return next();
 
+    const { mainKey } = req.params;
+    
     const {accessToken, refreshToken} = req.cookies
-    if (!refreshToken) return res.sendStatus(404) // Not found (token is expired / not in browsers memory, but DS records for the token weren't cleaned up yet)
+    if (!refreshToken) return res.send("Expired.") // Not found (token is expired / not in browsers memory, but DS records for the token weren't cleaned up yet)
 
     let token = accessToken
 
@@ -31,7 +37,10 @@ export function authenticateTokens(req, res, next) {
     if (!token) return res.sendStatus(403)
 
     jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403) // Forbidden
+        if (err) return res.send("Server-Side Error") // Forbidden
+
+        if (mainKey !== user.mainKey) return res.send("This Username is already taken!")
+        
         next()
     })
 }

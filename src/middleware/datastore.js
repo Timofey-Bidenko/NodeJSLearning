@@ -2,7 +2,7 @@ export const DS = {};
 
 export function ensureMainKey(req, res, next) {
     const { mainKey } = req.params;
-    req.UserIsNew = !!DS[mainKey]
+    req.UserIsNew = !DS[mainKey]
     /* if (!DS[mainKey]) {
         DS[mainKey] = { localId: 0, items: [] };
     } */

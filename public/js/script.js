@@ -13,7 +13,7 @@ function addTask(currentUrl) {
             body: JSON.stringify({ text: newTaskInput.value })
         }
         )
-            .then(() => location.reload())
+        .then(() => location.reload())
     }
 }
 
@@ -29,7 +29,7 @@ function createList(linkRootVar) {
         const url = `${linkRootVar}${newListInput.value}`
         console.log(url, "Logged")
 
-        fetch(url, { method: 'POST' })
+        fetch(url, { method: 'POST', credentials: 'include' })
         .then(() => location.href=url)
     }
 }

@@ -4,6 +4,7 @@ import express, { json } from "express";
 import getLink from "../CustomModules/getLink/index.js"
 import {viewRouter} from "../src/routes/view.js"
 import session from "express-session";
+import cookieParser from 'cookie-parser';
 const app = express();
 
 
@@ -13,6 +14,7 @@ const __dirname = path.dirname(path.dirname(__filename))
 global.__filename = __filename
 global.__dirname = __dirname
 
+app.use(cookieParser())
 app.use(json());
 app.use(express.static(path.join(__dirname, "public")))
 app.set("view engine", "pug");
