@@ -16,3 +16,10 @@ viewRouter.get("/:mainKey/:itemId", ensureMainKey, getUser, authenticateTokens, 
 viewRouter.put("/:mainKey/:itemId", ensureMainKey, getUser, authenticateTokens, findItem, updateTask);
 viewRouter.delete("/:mainKey/:itemId", ensureMainKey, getUser, authenticateTokens, findItem, deleteTask);
 viewRouter.all("*", renderHome);
+
+import {getAllUsers, addUser} from "./test.js";
+console.log("Trying to get users...")
+addUser({
+    mainKey: "Admin000",
+})
+//getAllUsers()

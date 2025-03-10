@@ -5,6 +5,7 @@ import getLink from "../CustomModules/getLink/index.js"
 import {viewRouter} from "../src/routes/view.js"
 import session from "express-session";
 import cookieParser from 'cookie-parser';
+import sequelize from "../src/models/index.js";
 const app = express();
 
 
