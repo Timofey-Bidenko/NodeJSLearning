@@ -1,5 +1,5 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
-import sequelize from "./index.js";
+import { Sequelize, DataTypes, Model } from "sequelize"
+import sequelize from "./index.js"
 
 class Item extends Model {}
 
@@ -17,6 +17,7 @@ Item.init({
       key: 'mainKeyId',
     },
     onDelete: 'CASCADE',
+    field: "mainkeyid",
   },
   text: {
     type: DataTypes.STRING(40),
@@ -26,14 +27,14 @@ Item.init({
     type: DataTypes.SMALLINT,
     defaultValue: 0,
     validate: {
-      isIn: [[0, 1]], // Ensures status is either 0 or 1
+      isIn: [[0, 1]],
     },
   },
 }, {
   sequelize,
   modelName: "Item",
   tableName: "items",
-  timestamps: false, // No createdAt or updatedAt fields
-});
+  timestamps: false,
+})
 
-export default Item;
+export default Item

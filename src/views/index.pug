@@ -13,16 +13,16 @@ block content
                     each task in tasks
                         li
                             p
-                                if (task.status === "done")
+                                if (task.status === 1)
                                     | ✅ 
                                     s
                                         | #{task.text}
                                 else
-                                    | #{task.status} ▶️
+                                    | ▶️
                                     b 
                                         | #{task.text}
                             button(style="margin-left: 20px" onclick=`deleteTask("${currentUrl}", ${task.id})`) Delete
-                            input(type="checkbox" checked=task.status === "done" onchange=`checkTask("${currentUrl}", ${task.id})`)
+                            input(type="checkbox" checked=task.status === 1 onchange=`checkTask("${currentUrl}", ${task.id})`)
         else
             input#newListInput(type="text" placeholder="New/GoTo User")
             button#newListInputButton(onclick=`createList("${linkRoot}")`) Create List

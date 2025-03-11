@@ -23,7 +23,7 @@ export function authenticateTokens(req, res, next) {
     const { UserIsNew } = req
     if (UserIsNew) return next();
 
-    const { mainKey } = req.params;
+    const { mainKey } = req.params
     
     const {accessToken, refreshToken} = req.cookies
     if (!refreshToken) return res.send("Expired.") // Not found (token is expired / not in browsers memory, but DS records for the token weren't cleaned up yet)
